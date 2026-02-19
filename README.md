@@ -4,7 +4,7 @@ TODO:
 2. create entities:
    - [x] student m - m teacher (don't use @ManyToMany)
    - [x] student entity
-   - [ ] student_teacher entity
+   - [x] student_teacher entity
    - [x] teacher entity
 3. rest endpoints:
    - [ ] student CRUD endpoints
