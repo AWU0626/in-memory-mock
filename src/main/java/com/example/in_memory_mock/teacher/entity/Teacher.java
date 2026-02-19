@@ -1,19 +1,20 @@
-package com.example.in_memory_mock.entity;
+package com.example.in_memory_mock.teacher.entity;
 
+import com.example.in_memory_mock.student.entity.Student;
 import jakarta.persistence.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "STUDENTS")
-public class Student {
+@Table(name = "TEACHERS")
+public class Teacher {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // UUID auto generate
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "age", nullable = false)
-    private int age;
+    private Integer age;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -21,8 +22,13 @@ public class Student {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @OneToMany
+    private Set<Student> students;
+
+    public Teacher() {}
+
     public UUID getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(UUID id) {
@@ -30,7 +36,7 @@ public class Student {
     }
 
     public Integer getAge() {
-        return this.age;
+        return age;
     }
 
     public void setAge(Integer age) {
@@ -38,7 +44,7 @@ public class Student {
     }
 
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -46,7 +52,7 @@ public class Student {
     }
 
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
