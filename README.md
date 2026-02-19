@@ -10,7 +10,8 @@ TODO:
    - [ ] student CRUD endpoints
    - [ ] get all related teachers by student id endpoint
 4. sql:
-   - [ ] attach sql create / DDL query (disable hibernate create table)
+   - [x] disable hibernate create table
+   - [ ] attach sql create / DDL query
 
 
 
