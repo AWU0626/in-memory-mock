@@ -1,5 +1,7 @@
 package com.example.in_memory_mock.student.service;
 
+import com.example.in_memory_mock.student.dto.StudentDTO;
+import com.example.in_memory_mock.student.dto.StudentMapper;
 import com.example.in_memory_mock.student.entity.Student;
 import com.example.in_memory_mock.student.repository.StudentRepository;
 import com.example.in_memory_mock.teacher.entity.Teacher;
@@ -18,32 +20,38 @@ public class StudentService {
     }
 
     // TODO: create student
-    public Student create(Student student) {
-        // @Repository -> JpaRepository --> ListCrudRepository -> crudRepository's save function
-        return studentRepository.save(student);
+    public StudentDTO create(StudentDTO studentDTO) {
+        Student student = StudentMapper.createNewStudentEntity(studentDTO);
+        Student savedStudent = studentRepository.save(student);
+
+        return StudentMapper.toStudentDTO(savedStudent);
     }
 
     // TODO: get student by id, if no result, returns null
-    public Student get(UUID id) {
-        return studentRepository
-                .findById(id)
-                .orElse(null);
+    public StudentDTO get(UUID id) {
+        Student student = studentRepository
+                            .findById(id)
+                            .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        return StudentMapper.toStudentDTO(student);
     }
 
     // TODO: update student
-    public Student update(UUID id, Student newStudentData) {
-        Student student = get(id);
+    public StudentDTO update(UUID id, StudentDTO newStudentDTOData) {
+        Student student = studentRepository
+                            .findById(id)
+                            .orElseThrow(() -> new RuntimeException("Student not found"));
 
-        String newFirstName = newStudentData.getFirstName();
-        String newLastName = newStudentData.getLastName();
-        Integer newAge = newStudentData.getAge();
+        String newFirstName = newStudentDTOData.getFirstName();
+        String newLastName = newStudentDTOData.getLastName();
+        Integer newAge = newStudentDTOData.getAge();
 
         if (newFirstName != null)  student.setFirstName(newFirstName);
         if (newLastName != null)  student.setLastName(newLastName);
         if (newAge != null)  student.setAge(newAge);
 
-        // return student with updated data
-        return studentRepository.save(student);
+        Student updatedStudent = studentRepository.save(student);
+        return StudentMapper.toStudentDTO(updatedStudent);
     }
 
     // TODO: delete student

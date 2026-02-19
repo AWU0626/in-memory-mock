@@ -2,6 +2,8 @@ package com.example.in_memory_mock.student_teacher.service;
 
 import com.example.in_memory_mock.student_teacher.entity.StudentTeacher;
 import com.example.in_memory_mock.student_teacher.repository.StudentTeacherRepository;
+import com.example.in_memory_mock.teacher.dto.TeacherDTO;
+import com.example.in_memory_mock.teacher.dto.TeacherMapper;
 import com.example.in_memory_mock.teacher.entity.Teacher;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,13 @@ public class StudentTeacherService {
     }
 
     // TODO: get list of teachers by student id
-    public List<Teacher> getTeachersByStudentId(UUID studentId) {
+    public List<TeacherDTO> getTeachersByStudentId(UUID studentId) {
         List<StudentTeacher> studentTeachers = studentTeacherRepository.findByStudentId(studentId);
 
         return studentTeachers
                     .stream()
                     .map(StudentTeacher::getTeacher) // map to teacher
+                    .map(TeacherMapper::toTeacherDTO) // convert teacher to teacherDTO
                     .toList(); // convert the stream of teacher to list of teachers
     }
 }

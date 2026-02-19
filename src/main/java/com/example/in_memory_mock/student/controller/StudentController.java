@@ -1,9 +1,9 @@
 package com.example.in_memory_mock.student.controller;
 
-import com.example.in_memory_mock.student.entity.Student;
+import com.example.in_memory_mock.student.dto.StudentDTO;
 import com.example.in_memory_mock.student.service.StudentService;
 import com.example.in_memory_mock.student_teacher.service.StudentTeacherService;
-import com.example.in_memory_mock.teacher.entity.Teacher;
+import com.example.in_memory_mock.teacher.dto.TeacherDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,23 +28,23 @@ public class StudentController {
     // TODO: api to create student
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Student createStudent(@RequestParam Student newStudent) {
-        return studentService.create(newStudent);
+    public StudentDTO createStudent(@RequestBody StudentDTO newStudentDTO) {
+        return studentService.create(newStudentDTO);
     }
 
     // TODO: api to get student,
     @GetMapping("/{id}")
-    public Student getStudent(@PathVariable UUID id) {
+    public StudentDTO getStudent(@PathVariable UUID id) {
         return studentService.get(id);
     }
 
     // TODO: api to update student
     @PutMapping("/{id}")
-    public Student updateStudent(
+    public StudentDTO updateStudent(
         @PathVariable UUID id,
-        @RequestParam Student newStudentData
+        @RequestBody StudentDTO newStudentDTOData
     ) {
-        return studentService.update(id, newStudentData);
+        return studentService.update(id, newStudentDTOData);
     }
 
     // TODO: api to delete student
@@ -55,8 +55,8 @@ public class StudentController {
     }
 
     // TODO: api to get teachers by student id
-    @GetMapping("/getRelatedTeachers/{id}")
-    public List<Teacher> getTeachersByStudentId(@PathVariable UUID id) {
+    @GetMapping("/{id}/getRelatedTeachers")
+    public List<TeacherDTO> getTeachersByStudentId(@PathVariable UUID id) {
         return studentTeacherService.getTeachersByStudentId(id);
     }
 }
