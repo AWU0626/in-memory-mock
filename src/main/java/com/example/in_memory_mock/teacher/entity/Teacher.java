@@ -1,6 +1,7 @@
 package com.example.in_memory_mock.teacher.entity;
 
 import com.example.in_memory_mock.student.entity.Student;
+import com.example.in_memory_mock.student_teacher.entity.StudentTeacher;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -22,8 +23,8 @@ public class Teacher {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToMany
-    private Set<Student> students;
+    @OneToMany(mappedBy = "teacher") // referencing Teacher object in StudentTeacher.class
+    private Set<StudentTeacher> studentTeachers;
 
     public Teacher() {}
 
